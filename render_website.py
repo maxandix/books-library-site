@@ -5,6 +5,7 @@ from more_itertools import chunked
 import os
 from os.path import join
 import math
+import glob
 
 PAGES_DIR = 'pages'
 BOOKS_PER_PAGE = 10
@@ -18,6 +19,9 @@ def on_reload():
 
     with open("media/books_info.json", "r") as my_file:
         books_info = json.loads(my_file.read())
+
+    for path in glob.iglob('./pages/*.html'):
+        os.remove(path)
 
     count_of_pages = math.ceil(len(books_info) / BOOKS_PER_PAGE)
     template = env.get_template('template.html')
